@@ -1,0 +1,24 @@
+[Unit]
+Description=Publish confirmed filesystem metrics to OCI Monitoring
+Wants=network-online.target
+After=network-online.target
+RequiresMountsFor=/
+
+[Service]
+Type=oneshot
+User=oracle-metrics
+Group=oracle-metrics
+ExecStart=/opt/oracle-disk-metrics/venv/bin/python /opt/oracle-disk-metrics/disk_metrics.py --config /etc/oracle-disk-metrics/config.json --publish
+TimeoutStartSec=50
+UMask=0077
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+Environment=PYTHONUNBUFFERED=1

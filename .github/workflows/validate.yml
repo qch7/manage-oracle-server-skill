@@ -1,0 +1,40 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.12']
+    env:
+      PYTHONUTF8: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            skill/manage-oracle-server/requirements.txt
+      - name: Install validation and pinned SDK dependencies
+        run: python -m pip install -r requirements-dev.txt -r skill/manage-oracle-server/requirements.txt
+      - name: Validate package, documentation, and publication hygiene
+        run: python -B tools/validate.py
+      - name: Test publication checks
+        run: python -B -m unittest discover -s tests -v
+      - name: Run offline skill tests and SDK contracts
+        run: python -B -m unittest discover -s skill/manage-oracle-server/tests -v

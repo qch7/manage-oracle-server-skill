@@ -1,0 +1,2 @@
+# OCI execution is optional; SSH and local config checks use standard tools.
+oci==2.188.0

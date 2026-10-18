@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "instance_id": "<confirmed-instance-ocid>",
+  "compartment_id": "<confirmed-metric-compartment-ocid>",
+  "region": "<confirmed-region>",
+  "namespace": "personal_server",
+  "mountpoints": ["/"],
+  "publishing_approval": {
+    "scope_sha256": "<hash-shown-by-describe-scope-and-approved-by-user>",
+    "confirmed_at": "<actual-user-confirmation-time-with-timezone>"
+  }
+}

@@ -1,0 +1,13 @@
+interface:
+  display_name: "Oracle 服务器管理"
+  short_description: "通过 SSH 与 OCI 工具管理服务器、网络、服务及磁盘监控告警"
+  default_prompt: "使用 $manage-oracle-server 管理我的 Oracle 云服务器，检查相关问题并完成已授权的维护、监控或告警配置。"
+  icon_small: "assets/icon.svg"
+  icon_large: "assets/icon.svg"
+policy:
+  products:
+  - "chatgpt"
+  - "codex"
+  - "api"
+  - "atlas"
+  allow_implicit_invocation: true

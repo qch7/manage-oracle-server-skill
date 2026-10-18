@@ -1,0 +1,27 @@
+# Defense in depth: real configuration must still live outside this package.
+*.pem
+*.key
+*.ppk
+id_rsa*
+id_ecdsa*
+id_ed25519*
+**/.ssh/
+**/.oci/
+**/profiles.json
+**/known_hosts*
+**/state/
+**/local/
+.env
+.env.*
+*.log
+__pycache__/
+*.py[cod]
+
+# Runtime and private operation state
+.venv/
+venv/
+.pytest_cache/
+*.plan.json
+*.journal.json
+*.lock
+*.zip

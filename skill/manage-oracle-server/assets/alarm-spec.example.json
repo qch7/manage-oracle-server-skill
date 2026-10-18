@@ -1,0 +1,17 @@
+{
+  "kind": "threshold",
+  "display_name": "example-cpu-high",
+  "namespace": "oci_computeagent",
+  "metric": "CpuUtilization",
+  "statistic": "mean",
+  "comparison": ">=",
+  "threshold": 85,
+  "pending_duration": "PT5M",
+  "compartment_id": "<ALARM_COMPARTMENT_OR_TENANCY_OCID>",
+  "metric_compartment_id": "<METRIC_COMPARTMENT_OR_TENANCY_OCID>",
+  "topic_id": "<EXISTING_NOTIFICATIONS_TOPIC_OCID>",
+  "severity": "WARNING",
+  "is_enabled": true,
+  "description": "CPU utilization remains high on the bound instance",
+  "body": "Inspect current workload and service health before making changes."
+}
