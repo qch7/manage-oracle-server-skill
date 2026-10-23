@@ -2,7 +2,7 @@
 
 ## 私有配置
 
-默认文件为用户主目录下 `.config/oracle-server/profiles.json`，可由 `ORACLE_SERVER_CONFIG` 或 `--config` 指定原生绝对路径。配置、状态和计划必须在 skill 与所有 Git 工作区之外；Linux/macOS 限制目录/文件权限，Windows 核对 ACL。
+默认文件为用户主目录下 `.config/oracle-server/profiles.json`，可由 `ORACLE_SERVER_CONFIG` 或 `--config` 指定原生绝对路径。真实连接配置与凭据必须在 skill 与所有 Git 工作区之外；Linux/macOS 限制目录/文件权限，Windows 核对 ACL。`runtimes.json` 和连接配置备份继续保存在该用户配置目录，运维状态按下节规则写入工作目录。
 
 ```json
 {
@@ -48,7 +48,13 @@ python scripts/server_config.py --config <absolute-profiles.json> upsert --serve
 
 `--input` 是当前实例对象，如 `{"oci": {...}}`，不含 `profiles` 外层。工具合并未知字段并保留其他实例；身份或目标变化需更新对应的真实确认时间。`check` 不带通道参数只检查外层结构，不能证明认证可用。
 
-配置同级的私有 `state/` 保存挂载点、受保护服务、观察时间和执行记录。未知配置版本停止；锁冲突先检查持有进程，不按文件年龄删除锁。历史记录不代替实时检查。
+未知配置版本停止；锁冲突先检查持有进程，不按文件年龄删除锁。历史记录不代替实时检查。
+
+## 运维状态
+
+将运维状态统一保存到用户指定或本次任务确定的工作目录下 `state/`，包括挂载点、受保护服务、观察时间、任务脚本、诊断下载、日志、操作计划和执行记录；可按实例别名、任务和日期分目录。不再默认使用 `profiles.json` 同级的 `state/`。
+
+先确定工作目录和状态目录的绝对路径，后续即使切换到 skill 或源码目录执行命令，也沿用该状态路径。工作目录使用用户的项目目录，状态目录保持在 skill 与源码 Git 仓库之外，不纳入版本控制。已有状态迁移时核对文件完整性，并更新脚本和文档中的路径引用；历史日志和已生成的计划、回执保持原内容。
 
 ## 本机 SDK 与 CLI 环境
 

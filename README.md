@@ -81,7 +81,8 @@ git clone https://github.com/qch7/manage-oracle-server-skill.git && (
 
 1. **SSH**：实例别名、IP/域名、用户名、端口，以及本机私钥的完整路径。Agent 必须取得用户对私钥路径的明确确认；只检查文件元数据，不要求上传、粘贴或复制私钥。
 2. **OCI**：只在需要云端操作时配置身份、region、实例及 compartment 绑定。支持 API Key 和浏览器会话；登录密码、MFA、密钥口令仅在本机输入。SSH 私钥不会自动充当 OCI API 签名密钥。
-3. **私有存储**：默认使用用户主目录下 `.config/oracle-server/profiles.json`，可通过 `ORACLE_SERVER_CONFIG` 指定包外绝对路径。所有真实配置、计划和执行记录都必须在 Git 工作区之外。
+3. **私有配置**：默认使用用户主目录下 `.config/oracle-server/profiles.json`，可通过 `ORACLE_SERVER_CONFIG` 指定包外绝对路径。真实连接配置与凭据保存在 skill 和 Git 工作区之外；`runtimes.json` 与连接配置备份保留在用户配置目录。
+4. **运维状态**：任务脚本、下载产物、日志、计划和执行记录统一放在用户指定工作目录下的 `state/`，不再默认写入用户配置目录。状态目录保持在 skill 和源码 Git 仓库之外，不纳入版本控制；切换目录执行 skill 脚本时仍沿用已确定的状态绝对路径。
 
 安装只是复制文件，没有自动执行的安装钩子；负责交互配置的 Agent 在首次使用时完成确认。确认时间、计划哈希等字段用于校验一致性，无法代替真实用户授权。
 
